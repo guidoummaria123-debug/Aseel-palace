@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aseel Palace | Luxury Beauty Sanctuary - Hafr Al Batin</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        window.tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDFBF7',
+                        beige: '#F5EBE6',
+                        rosegold: '#E0A899',
+                        charcoal: '#2C2523',
+                        goldhover: '#D49686'
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .bg-cream { background-color: #FDFBF7; }
+            .bg-beige { background-color: #F5EBE6; }
+            .bg-charcoal { background-color: #2C2523; }
+            .text-charcoal { color: #2C2523; }
+            .text-rosegold { color: #E0A899; }
+            .border-beige { border-color: #F5EBE6; }
+        }
+    </style>
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FDFBF7;
+            color: #2C2523;
+        }
+        [x-cloak] { display: none !important; }
+        .lang-ar .font-serif { font-family: 'Cairo', sans-serif; font-weight: 700; }
+        .lang-ar .font-sans { font-family: 'Cairo', sans-serif; }
+        .masonry-grid { display: columns; column-gap: 1.5rem; column-count: 3; }
+        @media (max-width: 768px) { .masonry-grid { column-count: 1; } }
+    </style>
+</head>
+<body x-data="{ 
+    lang: 'en', 
+    mobileMenu: false,
+    activeTab: 'all',
+    bookingStep: 1,
+    bookingData: { service: '', staff: '', date: '', time: '', name: '', phone: '', notes: '' },
+    translations: {
+        en: {
+            brandName: 'Aseel Palace',
+            tagline: 'Luxury Beauty Sanctuary',
+            bookNow: 'Book Appointment',
+            exploreMenu: 'Explore Services',
+            home: 'Home', about: 'Our Story', services: 'Services', gallery: 'Gallery', contact: 'Contact Us',
+            aboutHeading: 'Redefining Saudi Luxury Self-Care',
+            aboutBody: 'Located in the heart of Hafr Al Batin, Aseel Palace is a premium women-owned sanctuary crafted for those who demand uncompromising beauty mastery. We fuse cinematic artistry with top-tier wellness hospitality.',
+            hours: 'Opening Hours: 3:00 PM - 10:00 PM Daily'
+        },
+        ar: {
+            brandName: 'مركز أسيل بالاس',
+            tagline: 'ملاذ الفخامة والجمال المطلق',
+            bookNow: 'حجز موعد فاخر',
+            exploreMenu: 'اكتشفي الخدمات',
+            home: 'الرئيسية', about: 'قصتنا', services: 'قائمة الخدمات', gallery: 'المعرض', contact: 'اتصلي بنا',
+            aboutHeading: 'إعادة تعريف العناية الفاخرة بالذات',
+            aboutBody: 'يقع مركز أسيل بالاس في قلب حفر الباطن، وهو ملاذ نسائي راقٍ مصمم خصيصاً لمن يبحثن عن الإتقان المطلق والرفاهية العالية. نجمع بين الفن السينمائي وأعلى معايير الضيافة العالمية.',
+            hours: 'أوقات العمل: ٣:٠٠ مساءً - ١٠:٠٠ مساءً يومياً'
+        }
+    }
+}" :class="lang == 'ar' ? 'lang-ar' : ''" :dir="lang == 'ar' ? 'rtl' : 'ltr'">
+
+    <a href="https://wa.me/966503846665" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center" aria-label="WhatsApp Contact">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex flex-col">
+                <span class="font-serif text-2xl md:text-3xl tracking-[0.2em] font-light uppercase text-[#2C2523]" x-text="translations[lang].brandName"></span>
+                <span class="text-[9px] uppercase tracking-[0.4em] text-[#E0A899] mt-0.5" x-text="translations[lang].tagline"></span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-8 rtl:space-x-reverse font-sans text-xs uppercase tracking-widest text-[#2C2523] font-medium">
+                <a href="#" class="hover:text-[#E0A899] transition-colors" x-text="translations[lang].home"></a>
+                <a href="#about" class="hover:text-[#E0A899] transition-colors" x-text="translations[lang].about"></a>
+                <a href="#services" class="hover:text-[#E0A899] transition-colors" x-text="translations[lang].services"></a>
+                <a href="#gallery" class="hover:text-[#E0A899] transition-colors" x-text="translations[lang].gallery"></a>
+                <a href="#contact" class="hover:text-[#E0A899] transition-colors" x-text="translations[lang].contact"></a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4 rtl:space-x-reverse">
+                <button @click="lang = (lang === 'en' ? 'ar' : 'en')" class="text-xs uppercase tracking-widest border border-gray-200 px-3 py-1.5 rounded hover:bg-gray-50 transition-all font-medium">
+                    <span x-show="lang === 'en'">العربية</span>
+                    <span x-show="lang === 'ar'">English</span>
+                </button>
+                <a href="#booking" class="bg-[#2C2523] text-[#FDFBF7] text-xs uppercase tracking-widest px-6 py-3 rounded hover:bg-[#E0A899] transition-all duration-300 shadow-sm font-semibold" x-text="translations[lang].bookNow"></a>
+            </div>
+
+            <button @click="mobileMenu = !mobileMenu" class="md:hidden text-[#2C2523]" aria-label="Toggle Menu">
+                <i class="fa-solid text-xl" :class="mobileMenu ? 'fa-xmark' : 'fa-bars-staggered'"></i>
+            </button>
+        </div>
+
+        <div x-show="mobileMenu" x-transition.opacity class="fixed inset-0 top-[73px] bg-black/40 backdrop-blur-sm z-30 md:hidden" @click="mobileMenu = false"></div>
+        <div x-show="mobileMenu" x-transition.origin.top class="absolute top-[73px] left-0 w-full bg-[#FDFBF7] border-b border-gray-200 z-40 p-6 md:hidden shadow-xl" x-cloak>
+            <nav class="flex flex-col space-y-4 font-sans text-xs uppercase tracking-widest text-[#2C2523] font-medium mb-6">
+                <a href="#" @click="mobileMenu = false" class="py-2 border-b border-gray-100" x-text="translations[lang].home"></a>
+                <a href="#about" @click="mobileMenu = false" class="py-2 border-b border-gray-100" x-text="translations[lang].about"></a>
+                <a href="#services" @click="mobileMenu = false" class="py-2 border-b border-gray-100" x-text="translations[lang].services"></a>
+                <a href="#gallery" @click="mobileMenu = false" class="py-2 border-b border-gray-100" x-text="translations[lang].gallery"></a>
+                <a href="#contact" @click="mobileMenu = false" class="py-2" x-text="translations[lang].contact"></a>
+            </nav>
+            <div class="flex flex-col space-y-3">
+                <button @click="lang = (lang === 'en' ? 'ar' : 'en'); mobileMenu = false" class="text-xs text-center border border-gray-200 py-3 rounded bg-gray-50 font-medium">
+                    <span x-show="lang === 'en'">العربية</span>
+                    <span x-show="lang === 'ar'">English</span>
+                </button>
+                <a href="#booking" @click="mobileMenu = false" class="bg-[#2C2523] text-[#FDFBF7] text-center text-xs uppercase tracking-widest py-3 rounded shadow" x-text="translations[lang].bookNow"></a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative h-[85vh] flex items-center justify-center overflow-hidden bg-[#2C2523]">
+        <div class="absolute inset-0 opacity-40 pointer-events-none">
+            <img src="https://i.pinimg.com/736x/98/95/43/989543e49635bfda2718e4ba4f509d37.jpg" alt="Aseel Palace Atmosphere" class="w-full h-full object-cover scale-105 filter blur-[1px]">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-[#2C2523] via-transparent to-black/30"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <span class="text-[#E0A899] uppercase tracking-[0.5em] text-xs md:text-sm font-semibold block mb-4" x-text="translations[lang].tagline"></span>
+            <h1 class="font-serif text-4xl md:text-7xl text-[#FDFBF7] font-light tracking-wide leading-tight mb-8" x-text="translations[lang].brandName"></h1>
+            <div class="w-16 h-[1px] bg-[#E0A899] mx-auto mb-8"></div>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#booking" class="w-full sm:w-auto bg-[#E0A899] hover:bg-[#D49686] text-[#2C2523] font-sans text-xs uppercase tracking-widest font-semibold px-8 py-4 rounded transition-all duration-300 shadow-lg" x-text="translations[lang].bookNow"></a>
+                <a href="#services" class="w-full sm:w-auto border border-white/40 hover:border-white text-white font-sans text-xs uppercase tracking-widest font-semibold px-8 py-4 rounded backdrop-blur-sm transition-all duration-300" x-text="translations[lang].exploreMenu"></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-[#FDFBF7] border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+            <div class="md:col-span-5 space-y-6">
+                <span class="text-xs uppercase tracking-[0.3em] text-[#E0A899] font-bold block" x-text="lang === 'en' ? 'THE SANCTUARY' : 'الملاذ الفاخر'"></span>
+                <h2 class="font-serif text-3xl md:text-4xl text-[#2C2523] font-light leading-tight" x-text="translations[lang].aboutHeading"></h2>
+                <p class="text-[#2C2523]/80 leading-relaxed text-sm md:text-base font-light" x-text="translations[lang].aboutBody"></p>
+                <div class="pt-4 border-t border-gray-200 flex gap-8">
+                    <div>
+                        <h4 class="font-serif text-2xl text-[#E0A899]">100%</h4>
+                        <p class="text-[10px] uppercase tracking-wider text-gray-500 mt-1" x-text="lang === 'en' ? 'Women Owned & Run' : 'إدارة نسائية بالكامل'"></p>
+                    </div>
+                    <div>
+                        <h4 class="font-serif text-2xl text-[#E0A899]">Premium</h4>
+                        <p class="text-[10px] uppercase tracking-wider text-gray-500 mt-1" x-text="lang === 'en' ? 'Global Standards' : 'معايير عالمية صحية'"></p>
+                    </div>
+                </div>
+            </div>
+            <div class="md:col-span-7 grid grid-cols-2 gap-4">
+                <div class="space-y-4">
+                    <img src="https://i.pinimg.com/736x/98/95/43/989543e49635bfda2718e4ba4f509d37.jpg" alt="Interior Architecture" class="rounded-lg shadow-sm object-cover h-64 w-full">
+                    <img src="https://i.pinimg.com/736x/bc/6d/86/bc6d860df20c5780d603e87fc4b7890b.jpg" alt="VIP Space" class="rounded-lg shadow-sm object-cover h-48 w-full">
+                </div>
+                <div class="pt-8 space-y-4">
+                    <img src="https://i.pinimg.com/736x/4d/93/89/4d93892787df03309e63e26fdf9a39f6.jpg" alt="Details" class="rounded-lg shadow-sm object-cover h-48 w-full">
+                    <div class="bg-[#F5EBE6] p-6 rounded-lg h-64 flex flex-col justify-between">
+                        <i class="fa-solid fa-quote-left text-[#E0A899] text-3xl"></i>
+                        <p class="font-serif text-lg italic text-[#2C2523]" x-text="lang === 'en' ? 'Luxury is our baseline standard of hospitality.' : 'الفخامة ليست خياراً، بل هي معيار ضيافتنا الأساسي.'"></p>
+                        <span class="text-[10px] uppercase tracking-widest text-[#E0A899] font-bold">— Management</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-[0.3em] text-[#E0A899] font-bold" x-text="lang === 'en' ? 'THE MENU' : 'قائمة الخدمات الفاخرة'"></span>
+                <h2 class="font-serif text-3xl md:text-4xl text-[#2C2523] font-light mt-2" x-text="lang === 'en' ? 'Signature Treatments' : 'خدماتنا الاستثنائية'"></h2>
+                <div class="w-12 h-[1px] bg-[#E0A899] mx-auto mt-4"></div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-2 mb-12 border-b border-gray-200 pb-6 max-w-3xl mx-auto">
+                <button @click="activeTab = 'all'" :class="activeTab === 'all' ? 'bg-[#2C2523] text-white' : 'bg-white text-[#2C2523] hover:bg-gray-100'" class="text-xs uppercase tracking-widest px-4 py-2 rounded transition-all font-medium">
+                    <span x-show="lang === 'en'">All</span><span x-show="lang === 'ar'">كل الخدمات</span>
+                </button>
+                <button @click="activeTab = 'hair'" :class="activeTab === 'hair' ? 'bg-[#2C2523] text-white' : 'bg-white text-[#2C2523] hover:bg-gray-100'" class="text-xs uppercase tracking-widest px-4 py-2 rounded transition-all font-medium">
+                    <span x-show="lang === 'en'">Hair</span><span x-show="lang === 'ar'">العناية بالشعر</span>
+                </button>
+                <button @click="activeTab = 'nails'" :class="activeTab === 'nails' ? 'bg-[#2C2523] text-white' : 'bg-white text-[#2C2523] hover:bg-gray-100'" class="text-xs uppercase tracking-widest px-4 py-2 rounded transition-all font-medium">
+                    <span x-show="lang === 'en'">Nails</span><span x-show="lang === 'ar'">الأظافر</span>
+                </button>
+                <button @click="activeTab = 'makeup'" :class="activeTab === 'makeup' ? 'bg-[#2C2523] text-white' : 'bg-white text-[#2C2523] hover:bg-gray-100'" class="text-xs uppercase tracking-widest px-4 py-2 rounded transition-all font-medium">
+                    <span x-show="lang === 'en'">Makeup</span><span x-show="lang === 'ar'">المكياج</span>
+                </button>
+                <button @click="activeTab = 'spa'" :class="activeTab === 'spa' ? 'bg-[#2C2523] text-white' : 'bg-white text-[#2C2523] hover:bg-gray-100'" class="text-xs uppercase tracking-widest px-4 py-2 rounded transition-all font-medium">
+                    <span x-show="lang === 'en'">Spa</span><span x-show="lang === 'ar'">السبا والبشرة</span>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div x-show="activeTab === 'all' || activeTab === 'hair'" class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 overflow-hidden relative">
+                            <img src="https://i.pinimg.com/736x/8e/8d/62/8e8d62687bfec2272a8c3d987d65b16a.jpg" alt="Royal Hair Blowout" class="w-full h-full object-cover">
+                            <span class="absolute top-4 right-4 bg-white/90 text-[#2C2523] text-xs font-bold px-3 py-1.5 rounded-full">150 SAR</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl mb-2 text-[#2C2523]" x-text="lang === 'en' ? 'Royal Hair Blowout & Styling' : 'تسريحة وسيشوار رويال'"></h3>
+                            <p class="text-xs text-gray-500 font-light leading-relaxed" x-text="lang === 'en' ? 'Premium wash, scalp massage, and signature Hollywood blowout.' : 'غسيل بريميوم فاخر، مساج لفروة الرأس مع سيشوار هوليوود الاستثنائي.'"></p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button @click="bookingData.service = 'Royal Hair Blowout'; bookingStep = 2; document.getElementById('booking').scrollIntoView();" class="w-full border border-[#E0A899] text-[#2C2523] text-[11px] uppercase tracking-widest py-2.5 rounded hover:bg-[#E0A899] hover:text-white transition-colors font-medium" x-text="lang === 'en' ? 'Book This' : 'اختيار للحجز'"></button>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'all' || activeTab === 'hair'" class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 overflow-hidden relative">
+                            <img src="https://i.pinimg.com/736x/2b/9c/c3/2b9cc3697eb58509b7882269a8bbfbe4.jpg" alt="Balayage Color" class="w-full h-full object-cover">
+                            <span class="absolute top-4 right-4 bg-white/90 text-[#2C2523] text-xs font-bold px-3 py-1.5 rounded-full">650 SAR</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl mb-2 text-[#2C2523]" x-text="lang === 'en' ? 'Balayage & Premium Hair Coloring' : 'صبغ شعر بالياج فرنسي فاخر'"></h3>
+                            <p class="text-xs text-gray-500 font-light leading-relaxed" x-text="lang === 'en' ? 'Seamless blend color using luxury French techniques and protective gloss treatment.' : 'دمج لوني انسيابي باستخدام تقنيات فرنسية راقية مع معالجة اللمعان الفائقة لحماية الشعر.'"></p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button @click="bookingData.service = 'Balayage Hair Color'; bookingStep = 2; document.getElementById('booking').scrollIntoView();" class="w-full border border-[#E0A899] text-[#2C2523] text-[11px] uppercase tracking-widest py-2.5 rounded hover:bg-[#E0A899] hover:text-white transition-colors font-medium" x-text="lang === 'en' ? 'Book This' : 'اختيار للحجز'"></button>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'all' || activeTab === 'nails'" class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 overflow-hidden relative">
+                            <img src="https://i.pinimg.com/736x/cf/14/b8/cf14b8a213e8b08da33604bc6bd59114.jpg" alt="Russian Manicure" class="w-full h-full object-cover">
+                            <span class="absolute top-4 right-4 bg-white/90 text-[#2C2523] text-xs font-bold px-3 py-1.5 rounded-full">250 SAR</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl mb-2 text-[#2C2523]" x-text="lang === 'en' ? 'Russian Manicure & Gel Extensions' : 'مناكير روسي وتمديد جل المطور'"></h3>
+                            <p class="text-xs text-gray-500 font-light leading-relaxed" x-text="lang === 'en' ? 'Ultra-precise cuticle care, premium strengthening gel base, and custom shaping.' : 'عناية فائقة الدقة بالجلد المحيط بالأظافر، مع قاعدة جل مقوية وتشكيل هندسي راقٍ.'"></p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button @click="bookingData.service = 'Russian Manicure'; bookingStep = 2; document.getElementById('booking').scrollIntoView();" class="w-full border border-[#E0A899] text-[#2C2523] text-[11px] uppercase tracking-widest py-2.5 rounded hover:bg-[#E0A899] hover:text-white transition-colors font-medium" x-text="lang === 'en' ? 'Book This' : 'اختيار للحجز'"></button>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'all' || activeTab === 'makeup'" class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 overflow-hidden relative">
+                            <img src="https://i.pinimg.com/736x/5c/4b/36/5c4b360b0b8c3ba59a22cc3b8cae640e.jpg" alt="Glamour Makeup" class="w-full h-full object-cover">
+                            <span class="absolute top-4 right-4 bg-white/90 text-[#2C2523] text-xs font-bold px-3 py-1.5 rounded-full">500 SAR</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl mb-2 text-[#2C2523]" x-text="lang === 'en' ? 'Glamour Evening Makeup' : 'مكياج سهرة سينمائي خلاب'"></h3>
+                            <p class="text-xs text-gray-500 font-light leading-relaxed" x-text="lang === 'en' ? 'High-definition flawless base, customized eye contouring, and premium lashes.' : 'تأسيس بشرة مخملي عالي الدقة، كونتور مخصص لإبراز ملامح العين مع رموش فاخرة للغاية.'"></p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button @click="bookingData.service = 'Glamour Evening Makeup'; bookingStep = 2; document.getElementById('booking').scrollIntoView();" class="w-full border border-[#E0A899] text-[#2C2523] text-[11px] uppercase tracking-widest py-2.5 rounded hover:bg-[#E0A899] hover:text-white transition-colors font-medium" x-text="lang === 'en' ? 'Book This' : 'اختيار للحجز'"></button>
+                    </div>
+                </div>
+
+                <div x-show="activeTab === 'all' || activeTab === 'spa'" class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div>
+                        <div class="h-60 overflow-hidden relative">
+                            <img src="https://i.pinimg.com/736x/f0/a6/f3/f0a6f3bdfcf278d21b03bc29db8cf552.jpg" alt="Hydrafacial Glow" class="w-full h-full object-cover">
+                            <span class="absolute top-4 right-4 bg-white/90 text-[#2C2523] text-xs font-bold px-3 py-1.5 rounded-full">400 SAR</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-serif text-xl mb-2 text-[#2C2523]" x-text="lang === 'en' ? 'Advanced Hydrafacial Glow' : 'هيدرافيشال متطور للنضارة'"></h3>
+                            <p class="text-xs text-gray-500 font-light leading-relaxed" x-text="lang === 'en' ? 'Deep cleansing, exfoliation, and antioxidant infusion for an instant glass-skin effect.' : 'تنظيف عميق، تقشير مجهري مائي، وضخ مضادات الأكسدة للحصول الفوري على تأثير بشرة الزجاج النضرة.'"></p>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button @click="bookingData.service = 'Advanced Hydrafacial'; bookingStep = 2; document.getElementById('booking').scrollIntoView();" class="w-full border border-[#E0A899] text-[#2C2523] text-[11px] uppercase tracking-widest py-2.5 rounded hover:bg-[#E0A899] hover:text-white transition-colors font-medium" x-text="lang === 'en' ? 'Book This' : 'اختيار للحجز'"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="py-20 bg-[#2C2523] text-[#FDFBF7]">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="text-center mb-10">
+                <span class="text-xs uppercase tracking-[0.4em] text-[#E0A899] block mb-2" x-text="lang === 'en' ? 'RESERVE EXPERIENCE' : 'حجز تجربة الرفاهية'"></span>
+                <h2 class="font-serif text-3xl md:text-4xl font-light" x-text="lang === 'en' ? 'Online Appointment Concierge' : 'نظام الحجز الفوري المطور'"></h2>
+                <div class="w-12 h-[1px] bg-[#E0A899] mx-auto mt-4"></div>
+            </div>
+
+            <div class="bg-white/5 p-8 rounded-xl border border-white/10 backdrop-blur-md">
+                <div x-show="bookingStep === 1">
+                    <p class="text-sm text-center text-white/80 mb-6" x-text="lang === 'en' ? 'Please select your preferred treatment from the list above to begin.' : 'يرجى تصفح قائمة العلاجات والخدمات أعلاه والنقر فوق اختيار الخدمة للبدء.'"></p>
+                    <div class="text-center">
+                        <button @click="bookingStep = 2" class="bg-[#E0A899] text-[#2C2523] font-sans text-xs uppercase tracking-widest font-bold px-6 py-3 rounded" x-text="lang === 'en' ? 'Proceed with General Consultation' : 'المتابعة مع استشارة عامة'"></button>
+                    </div>
+                </div>
+
+                <div x-show="bookingStep === 2" x-cloak class="space-y-6">
+                    <h3 class="font-serif text-xl border-b border-white/10 pb-2 text-[#E0A899]" x-text="lang === 'en' ? 'Assign Specialist & Timing' : 'تحديد الأخصائية والتوقيت'"></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-white/60 mb-2">Stylist / Master Artist</label>
+                            <select x-model="bookingData.staff" class="w-full bg-[#2C2523] border border-white/20 rounded p-3 text-sm focus:border-[#E0A899] focus:outline-none text-white">
+                                <option value="">First Available Luxury Master</option>
+                                <option value="Madame Amara (Hair Master)">Madame Amara (Hair)</option>
+                                <option value="Elena Rostova (Nails)">Elena Rostova (Nails)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-white/60 mb-2">Select Date</label>
+                            <input type="date" x-model="bookingData.date" class="w-full bg-[#2C2523] border border-white/20 rounded p-3 text-sm focus:border-[#E0A899] focus:outline-none text-white">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                        <button @click="bookingStep = 1" class="text-xs uppercase tracking-widest text-white/60 hover:text-white" x-text="lang === 'en' ? 'Back' : 'العودة'"></button>
+                        <button @click="bookingStep = 3" class="bg-[#E0A899] text-[#2C2523] font-sans text-xs uppercase tracking-widest font-bold px-6 py-3 rounded" x-text="lang === 'en' ? 'Next Step' : 'الخطوة التالية'"></button>
+                    </div>
+                </div>
+
+                <div x-show="bookingStep === 3" x-cloak class="space-y-6">
+                    <h3 class="font-serif text-xl border-b border-white/10 pb-2 text-[#E0A899]" x-text="lang === 'en' ? 'Guest Information' : 'بيانات الضيفة الشخصية'"></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-white/60 mb-2">Your Name</label>
+                            <input type="text" x-model="bookingData.name" class="w-full bg-[#2C2523] border border-white/20 rounded p-3 text-sm text-white focus:outline-none focus:border-[#E0A899]">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-white/60 mb-2">Mobile Number</label>
+                            <input type="tel" x-model="bookingData.phone" class="w-full bg-[#2C2523] border border-white/20 rounded p-3 text-sm text-white focus:outline-none focus:border-[#E0A899]">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center pt-4 border-t border-white/10">
+                        <button @click="bookingStep = 2" class="text-xs uppercase tracking-widest text-white/60 hover:text-white" x-text="lang === 'en' ? 'Back' : 'العودة'"></button>
+                        <a :href="'https://wa.me/966503846665?text=' + encodeURIComponent('Aseel Palace Appointment Request:\n- Service: ' + bookingData.service + '\n- Staff: ' + bookingData.staff + '\n- Date: ' + bookingData.date + '\n- Name: ' + bookingData.name + '\n- Phone: ' + bookingData.phone)" target="_blank" class="bg-[#25D366] text-white font-sans text-xs uppercase tracking-widest font-bold px-6 py-3 rounded flex items-center space-x-2 shadow-md">
+                            <i class="fab fa-whatsapp"></i>
+                            <span x-text="lang === 'en' ? 'Confirm via WhatsApp' : 'تأكيد عبر واتساب'"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 bg-[#FDFBF7]">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-[0.3em] text-[#E0A899] font-bold" x-text="lang === 'en' ? 'VISUAL INSPIRATION' : 'الإلهام البصري المنسق'"></span>
+                <h2 class="font-serif text-3xl md:text-4xl text-[#2C2523] font-light mt-2" x-text="lang === 'en' ? 'Atmosphere & Architecture' : 'معرض الفخامة والجمال'"></h2>
+                <div class="w-12 h-[1px] bg-[#E0A899] mx-auto mt-4"></div>
+            </div>
+
+            <div class="masonry-grid space-y-6">
+                <div class="break-inside-avoid mb-6 overflow-hidden rounded-xl border border-gray-100 shadow-sm">
+                    <img src="https://i.pinimg.com/736x/98/95/43/989543e49635bfda2718e4ba4f509d37.jpg" alt="Interior Look" class="w-full object-cover">
+                </div>
+                <div class="break-inside-avoid mb-6 overflow-hidden rounded-xl border border-gray-100 shadow-sm">
+                    <img src="https://i.pinimg.com/736x/bc/6d/86/bc6d860df20c5780d603e87fc4b7890b.jpg" alt="Luxury setup" class="w-full object-cover">
+                </div>
+                <div class="break-inside-avoid mb-6 overflow-hidden rounded-xl border border-gray-100 shadow-sm">
+                    <img src="https://i.pinimg.com/736x/4d/93/89/4d93892787df03309e63e26fdf9a39f6.jpg" alt="Details look" class="w-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-[#FDFBF7] border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div class="lg:col-span-5 space-y-8">
+                <div>
+                    <span class="text-xs uppercase tracking-[0.3em] text-[#E0A899] font-bold block mb-2" x-text="lang === 'en' ? 'VISIT THE PALACE' : 'موقع المركز والاتصال'"></span>
+                    <h2 class="font-serif text-3xl md:text-4xl text-[#2C2523] font-light" x-text="lang === 'en' ? 'Contact Details & Hours' : 'يسعدنا استقبالك في ملاذنا'"></h2>
+                </div>
+
+                <div class="space-y-4 text-sm text-[#2C2523] font-light">
+                    <div class="flex items-start space-x-4 rtl:space-x-reverse">
+                        <i class="fa-solid fa-location-dot text-[#E0A899] mt-1 text-base"></i>
+                        <div>
+                            <p class="font-medium">King Faisal bin Abdul Aziz Rd, Al Muhammadiyah, Hafar Al Batin 39911, Saudi Arabia</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 rtl:space-x-reverse">
+                        <i class="fa-solid fa-clock text-[#E0A899] mt-1 text-base"></i>
+                        <div>
+                            <p class="font-medium" x-text="translations[lang].hours"></p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-4 rtl:space-x-reverse">
+                        <i class="fa-solid fa-phone text-[#E0A899] mt-1 text-base"></i>
+                        <div>
+                            <a href="tel:+966503846665" class="text-[#E0A899] tracking-widest font-semibold hover:underline">+966 50 384 6665</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 h-96 rounded-xl overflow-hidden shadow-sm border border-gray-200">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3509.3094406214343!2d45.8943!3d28.4239!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDI1JzI2LjAiTiA0NcKwNTMnMzkuNSJF!5e0!3m2!1sen!2ssa!4v1680000000000!5m2!1sen!2ssa" class="w-full h-full border-0 filter grayscale" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-[#2C2523] text-white/80 py-12 border-t border-white/10 text-center text-xs tracking-wider">
+        <div class="max-w-7xl mx-auto px-6 space-y-4">
+            <h3 class="font-serif text-xl tracking-widest text-white" x-text="translations[lang].brandName"></h3>
+            <p>© 2026 Aseel Palace (مركز أسيل بالاس). All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
