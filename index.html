@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aseel Palace | Luxury Women Salon, Spa & Cafe - Hafar Al Batin</title>
+    <meta name="description" content="Welcome to Aseel Palace (مركز أسيل بالاس) in Hafar Al Batin. A premium women's beauty salon, elite spa, and exclusive ladies' social cafe. Book your royal treatment today.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Alpine.js for interactive controls -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cream: {
+                            50: '#FCFBF7',
+                            100: '#F7F4EB',
+                            200: '#EFEAD8',
+                        },
+                        rosegold: {
+                            100: '#F3E8E6',
+                            200: '#E7D1CC',
+                            500: '#C8A296',
+                            600: '#B58D81',
+                        },
+                        champagne: '#EAD3BE',
+                        charcoal: '#1A1A1A',
+                        bronze: '#8C6239',
+                    },
+                    fontFamily: {
+                        serif: ['Cinzel', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .font-luxury { font-family: 'Cinzel', serif; }
+        .font-body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        html:lang(ar) .font-luxury { font-family: 'Cairo', sans-serif; font-weight: 700; }
+        html:lang(ar) .font-body { font-family: 'Cairo', sans-serif; }
+        
+        /* Custom Premium Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #1A1A1A; }
+        ::-webkit-scrollbar-thumb { background: #C8A296; border-radius: 3px; }
+
+        /* Neoclassical subtle ambient overlay glow */
+        .ambient-glow {
+            background: radial-gradient(circle at 50% 50%, rgba(243, 232, 230, 0.15) 0%, transparent 80%);
+        }
+        .dark .ambient-glow {
+            background: radial-gradient(circle at 50% 50%, rgba(200, 162, 150, 0.05) 0%, transparent 80%);
+        }
+    </style>
+
+    <!-- Structured Local Business Data SEO Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BeautySalon",
+      "name": "Aseel Palace | مركز أسيل بالاس",
+      "image": "https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1920",
+      "@id": "https://aseelpalace.com",
+      "url": "https://aseelpalace.com",
+      "telephone": "+966503846665",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "King Faisal bin Abdul Aziz Rd, Al Muhammadiyah",
+        "addressLocality": "Hafar Al Batin",
+        "postalCode": "39911",
+        "addressCountry": "SA"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": "28.4325",
+        "longitude": "45.9562"
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "opens": "10:00",
+        "closes": "22:00"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "reviewCount": "1428"
+      }
+    }
+    </script>
+</head>
+<body x-data="appState()" :class="{'dark bg-charcoal text-cream-100': darkMode, 'bg-cream-50 text-charcoal': !darkMode}" class="font-body transition-colors duration-500 antialiased overflow-x-hidden" :lang="lang" :dir="lang === 'ar' ? 'rtl' : 'ltr'">
+
+    <!-- TOP ANNOUNCEMENT BAR -->
+    <div class="bg-charcoal dark:bg-black text-rosegold-200 text-xs tracking-widest py-2 px-4 text-center border-b border-rosegold-500/20 relative z-50">
+        <span x-text="t('topBar')"></span>
+    </div>
+
+    <!-- STICKY PREMIUM NAVIGATION -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-cream-50/80 dark:bg-charcoal/80 border-b border-rosegold-500/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Logo Brand Identity -->
+            <a href="#" @click.prevent="currentPage = 'home'" class="flex flex-col items-center group">
+                <span class="font-luxury text-2xl tracking-widest text-charcoal dark:text-cream-100 group-hover:text-rosegold-500 transition-colors">ASEEL PALACE</span>
+                <span class="font-arabic text-xs tracking-normal text-rosegold-600 dark:text-rosegold-500 -mt-1">مركز أسيل بالاس</span>
+            </a>
+
+            <!-- Desktop Nav System Links -->
+            <nav class="hidden lg:flex space-x-8 rtl:space-x-reverse text-sm font-medium tracking-wider">
+                <template x-for="page in ['home', 'about', 'services', 'products', 'gallery', 'contact']">
+                    <button @click="currentPage = page; window.scrollTo(0,0)" 
+                            :class="currentPage === page ? 'text-rosegold-600 border-b-2 border-rosegold-500' : 'text-charcoal/70 dark:text-cream-200 hover:text-rosegold-500'" 
+                            class="pb-1 transition-all capitalize" 
+                            x-text="t('nav_' + page)"></button>
+                </template>
+            </nav>
+
+            <!-- Action Controllers -->
+            <div class="hidden lg:flex items-center space-x-4 rtl:space-x-reverse">
+                <!-- Theme Controller -->
+                <button @click="darkMode = !darkMode" class="p-2 text-charcoal dark:text-cream-100 hover:text-rosegold-500 transition-colors" title="Toggle Mood">
+                    <i :class="darkMode ? 'fa-solid fa-sun text-lg' : 'fa-solid fa-moon text-lg'"></i>
+                </button>
+                <!-- Language Controller -->
+                <button @click="toggleLang()" class="px-3 py-1 text-xs border border-rosegold-500/30 rounded font-medium text-charcoal dark:text-cream-100 hover:bg-rosegold-500 hover:text-white transition-all">
+                    <span x-text="lang === 'en' ? 'العربية' : 'English'"></span>
+                </button>
+                <!-- Elite CTA Booking -->
+                <button @click="currentPage = 'booking'; window.scrollTo(0,0)" class="bg-charcoal text-cream-100 dark:bg-rosegold-500 dark:text-charcoal hover:bg-rosegold-600 dark:hover:bg-rosegold-600 dark:hover:text-white px-5 py-2.5 text-xs font-semibold tracking-widest transition-all rounded shadow-md">
+                    <span x-text="t('bookNow')"></span>
+                </button>
+            </div>
+
+            <!-- Mobile Burger Trigger -->
+            <div class="lg:hidden flex items-center space-x-3 rtl:space-x-reverse">
+                <button @click="darkMode = !darkMode" class="p-2 text-charcoal dark:text-cream-100">
+                    <i :class="darkMode ? 'fa-solid fa-sun' : 'fa-solid fa-moon'"></i>
+                </button>
+                <button @click="toggleLang()" class="px-2 py-0.5 text-xs border border-rosegold-500/30 rounded text-charcoal dark:text-cream-100">
+                    <span x-text="lang === 'en' ? 'Ar' : 'En'"></span>
+                </button>
+                <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-charcoal dark:text-cream-100 p-2">
+                    <i :class="mobileMenuOpen ? 'fa-solid fa-xmark text-xl' : 'fa-solid fa-bars text-xl'"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Architecture Overlay Menu -->
+        <div x-show="mobileMenuOpen" x-transition class="lg:hidden fixed inset-x-0 top-20 bg-cream-100 dark:bg-charcoal border-b border-rosegold-500/20 shadow-2xl py-6 px-4 z-40">
+            <div class="flex flex-col space-y-4 text-center">
+                <template x-for="page in ['home', 'about', 'services', 'products', 'gallery', 'contact']">
+                    <button @click="currentPage = page; mobileMenuOpen = false; window.scrollTo(0,0)" 
+                            :class="currentPage === page ? 'text-rosegold-600 font-bold' : 'text-charcoal dark:text-cream-200'"
+                            class="py-2 text-base tracking-wide border-b border-rosegold-500/5 capitalize" 
+                            x-text="t('nav_' + page)"></button>
+                </template>
+                <button @click="currentPage = 'booking'; mobileMenuOpen = false; window.scrollTo(0,0)" class="mt-4 bg-rosegold-500 text-white py-3 font-semibold rounded tracking-widest">
+                    <span x-text="t('bookNow')"></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTENT VIEWS SYSTEM CONTAINER -->
+    <main class="min-h-screen relative">
+        <div class="ambient-glow absolute inset-0 pointer-events-none"></div>
+
+        <!-- 1. HOME VIEW -->
+        <div x-show="currentPage === 'home'" x-transition.duration.400ms>
+            
+            <!-- Fullscreen Cinematic Hero -->
+            <section class="relative h-[90vh] bg-cover bg-center flex items-center justify-center overflow-hidden" style="background-image: linear-gradient(to bottom, rgba(26,26,26,0.5), rgba(26,26,26,0.85)), url('https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=1920');">
+                <div class="max-w-4xl mx-auto text-center px-4 z-10 text-white">
+                    <div class="inline-flex items-center space-x-2 rtl:space-x-reverse bg-rosegold-500/20 backdrop-blur-md px-4 py-2 border border-rosegold-500/30 rounded-full mb-6">
+                        <i class="fa-solid fa-star text-champagne text-xs"></i>
+                        <span class="text-xs tracking-widest font-medium uppercase text-cream-100" x-text="t('eliteReputation')"></span>
+                    </div>
+                    <h1 class="font-luxury text-4xl sm:text-6xl md:text-7xl tracking-widest mb-6 leading-tight" x-html="t('heroTitle')"></h1>
+                    <p class="font-body text-base sm:text-lg text-cream-200 max-w-2xl mx-auto mb-10 tracking-wide font-light" x-text="t('heroSubtitle')"></p>
+                    <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                        <button @click="currentPage = 'booking'; window.scrollTo(0,0)" class="w-full sm:w-auto bg-rosegold-500 text-charcoal hover:bg-white hover:text-charcoal px-8 py-4 font-bold text-xs tracking-widest rounded transition-all uppercase shadow-lg">
+                            <span x-text="t('bookAppointment')"></span>
+                        </button>
+                        <button @click="currentPage = 'services'; window.scrollTo(0,0)" class="w-full sm:w-auto border-2 border-cream-100 text-cream-100 hover:bg-cream-100 hover:text-charcoal px-8 py-3.5 font-bold text-xs tracking-widest rounded transition-all uppercase">
+                            <span x-text="t('viewMenu')"></span>
+                        </button>
+                    </div>
+                </div>
+                <!-- Dynamic Neoclassical Floating Pillars Architectural Aesthetic Hint -->
+                <div class="absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-cream-50 dark:from-charcoal to-transparent"></div>
+            </section>
+
+            <!-- Premium Identity Anchor Callout -->
+            <section class="py-12 bg-cream-100 dark:bg-black/40 border-y border-rosegold-500/10">
+                <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x rtl:divide-x-reverse divide-rosegold-500/20">
+                    <div class="pt-4 md:pt-0">
+                        <i class="fa-solid fa-crown text-2xl text-rosegold-500 mb-2"></i>
+                        <h4 class="font-luxury text-lg tracking-wider" x-text="t('feature1_title')"></h4>
+                        <p class="text-xs text-charcoal/60 dark:text-cream-200 mt-1" x-text="t('feature1_desc')"></p>
+                    </div>
+                    <div class="pt-4 md:pt-0">
+                        <i class="fa-solid fa-mug-hot text-2xl text-rosegold-500 mb-2"></i>
+                        <h4 class="font-luxury text-lg tracking-wider" x-text="t('feature2_title')"></h4>
+                        <p class="text-xs text-charcoal/60 dark:text-cream-200 mt-1" x-text="t('feature2_desc')"></p>
+                    </div>
+                    <div class="pt-4 md:pt-0">
+                        <i class="fa-solid fa-shield-halved text-2xl text-rosegold-500 mb-2"></i>
+                        <h4 class="font-luxury text-lg tracking-wider" x-text="t('feature3_title')"></h4>
+                        <p class="text-xs text-charcoal/60 dark:text-cream-200 mt-1" x-text="t('feature3_desc')"></p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Featured Core Experiences Preview Grid -->
+            <section class="py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="text-center max-w-3xl mx-auto mb-16">
+                    <span class="text-xs tracking-widest uppercase text-rosegold-600 dark:text-rosegold-500 font-semibold" x-text="t('experienceTitle')"></span>
+                    <h2 class="font-luxury text-3xl sm:text-4xl tracking-wider mt-2" x-text="t('experienceSubtitle')"></h2>
+                    <div class="w-16 h-[2px] bg-rosegold-500 mx-auto mt-4"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Cards Grid -->
+                    <div class="group bg-cream-100 dark:bg-black/20 rounded overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-rosegold-500/5">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1633681926035-ec1ac984418a?q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Hair Design">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-luxury text-lg tracking-wide mb-2" x-text="t('cat_hair')"></h3>
+                            <p class="text-sm text-charcoal/60 dark:text-cream-200 mb-4 font-light" x-text="t('cat_hair_desc')"></p>
+                            <button @click="currentPage='services'; window.scrollTo(0,0)" class="text-xs font-bold tracking-widest text-rosegold-600 group-hover:text-charcoal dark:group-hover:text-white transition-colors" x-text="t('exploreMore')"></button>
+                        </div>
+                    </div>
+                    <div class="group bg-cream-100 dark:bg-black/20 rounded overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-rosegold-500/5">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Nail Art">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-luxury text-lg tracking-wide mb-2" x-text="t('cat_nails')"></h3>
+                            <p class="text-sm text-charcoal/60 dark:text-cream-200 mb-4 font-light" x-text="t('cat_nails_desc')"></p>
+                            <button @click="currentPage='services'; window.scrollTo(0,0)" class="text-xs font-bold tracking-widest text-rosegold-600 group-hover:text-charcoal dark:group-hover:text-white transition-colors" x-text="t('exploreMore')"></button>
+                        </div>
+                    </div>
+                    <div class="group bg-cream-100 dark:bg-black/20 rounded overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-rosegold-500/5">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Spa Lounge">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-luxury text-lg tracking-wide mb-2" x-text="t('cat_spa')"></h3>
+                            <p class="text-sm text-charcoal/60 dark:text-cream-200 mb-4 font-light" x-text="t('cat_spa_desc')"></p>
+                            <button @click="currentPage='services'; window.scrollTo(0,0)" class="text-xs font-bold tracking-widest text-rosegold-600 group-hover:text-charcoal dark:group-hover:text-white transition-colors" x-text="t('exploreMore')"></button>
+                        </div>
+                    </div>
+                    <div class="group bg-cream-100 dark:bg-black/20 rounded overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-rosegold-500/5">
+                        <div class="h-64 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Boutique Cafe">
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-luxury text-lg tracking-wide mb-2" x-text="t('cat_cafe')"></h3>
+                            <p class="text-sm text-charcoal/60 dark:text-cream-200 mb-4 font-light" x-text="t('cat_cafe_desc')"></p>
+                            <button @click="currentPage='services'; window.scrollTo(0,0)" class="text-xs font-bold tracking-widest text-rosegold-600 group-hover:text-charcoal dark:group-hover:text-white transition-colors" x-text="t('exploreMore')"></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Pinterest-Style Masonry Showcase Grid Component -->
+            <section class="py-16 bg-cream-100 dark:bg-black/30">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                        <div>
+                            <span class="text-xs tracking-widest uppercase text-rosegold-600" x-text="t('galleryPreTitle')"></span>
+                            <h2 class="font-luxury text-2xl sm:text-3xl tracking-wider mt-1" x-text="t('galleryTitle')"></h2>
+                        </div>
+                        <button @click="currentPage='gallery'; window.scrollTo(0,0)" class="mt-4 md:mt-0 border-b border-charcoal dark:border-cream-100 pb-1 text-xs font-bold tracking-widest uppercase hover:text-rosegold-500 transition-colors" x-text="t('viewFullGallery')"></button>
+                    </div>
+                    
+                    <!-- Structured Masonry Flex/Grid Alternative for Optimal Responsive Loading -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                        <div class="space-y-4">
+                            <div class="rounded overflow-hidden shadow-sm"><img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?q=80&w=600" class="w-full object-cover h-72"></div>
+                            <div class="rounded overflow-hidden shadow-sm"><img src="https://images.unsplash.com/photo-1633681926035-ec1ac984418a?q=80&w=600" class="w-full object-cover h-48"></div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="rounded overflow-hidden shadow-sm"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600" class="w-full object-cover h-52"></div>
+                            <div class="rounded overflow-hidden shadow-sm"><img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600" class="w-full object-cover h-64"></div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="rounded overflow-hidden shadow-sm"><img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600" class="w-full object-cover h-64"></div>
+                            <div class="rounded overflow-hidden shadow-sm"><img src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?q=80&w=600" class="w-full object-cover h-52"></div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="rounded overflow-hidden shadow-sm"><img src="https://images.unsplash.com/photo-1596178060810-72cb7cbeaa8c?q=80&w=600" class="w-full object-cover h-48"></div>
+                            <div class="rounded overflow-hidden shadow-sm"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600" class="w-full object-cover h-72"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Elite Social Proof Google Maps Reviews Slider -->
+            <section class="py-20 max-w-5xl mx-auto px-4 text-center">
+                <div class="mb-8">
+                    <div class="flex justify-center items-center space-x-1 rtl:space-x-reverse text-xl text-champagne mb-2">
+                        <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    </div>
+                    <h3 class="font-luxury text-xl tracking-widest"><span class="text-rosegold-500 font-bold">4.7</span> / 5.0 (1,428 Verified Google Reviews)</h3>
+                    <p class="text-xs uppercase tracking-widest text-charcoal/50 dark:text-cream-200/50 mt-1" x-text="t('localReputationNote')"></p>
+                </div>
+                
+                <!-- Dynamic Testimonial Rotator Framework -->
+                <div class="bg-cream-100 dark:bg-black/20 p-8 sm:p-12 rounded border border-rosegold-500/10 relative">
+                    <i class="fa-solid fa-quote-left absolute top-6 left-6 text-4xl text-rosegold-500/10"></i>
+                    <p class="font-body italic text-base sm:text-lg max-w-3xl mx-auto text-charcoal/80 dark:text-cream-100 leading-relaxed" x-text="t('testimonialText')"></p>
+                    <h5 class="font-luxury text-xs tracking-widest uppercase text-rosegold-600 mt-6">— Reem Al-Shammari, Hafar Al Batin Customer</h5>
+                </div>
+            </section>
+        </div>
+
+        <!-- 2. ABOUT PAGE VIEW -->
+        <div x-show="currentPage === 'about'" x-transition.duration.400ms class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-widest uppercase text-rosegold-600" x-text="t('aboutPreTitle')"></span>
+                <h1 class="font-luxury text-3xl sm:text-5xl tracking-widest mt-2" x-text="t('aboutTitle')"></h1>
+                <div class="w-20 h-[2px] bg-rosegold-500 mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <h3 class="font-luxury text-2xl tracking-wide text-rosegold-600" x-text="t('aboutHeading')"></h3>
+                    <p class="text-base leading-relaxed text-charcoal/80 dark:text-cream-100 text-justify font-light" x-text="t('aboutBody')"></p>
+                    <div class="p-6 bg-cream-100 dark:bg-black/30 border-l-4 border-rosegold-500 rounded-r">
+                        <h4 class="font-luxury text-sm tracking-widest mb-1 uppercase" x-text="t('ourMission')"></h4>
+                        <p class="text-xs text-charcoal/60 dark:text-cream-200" x-text="t('missionBody')"></p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?q=80&w=600" class="w-full h-80 object-cover rounded shadow-md" alt="Luxury Setup">
+                    <img src="https://images.unsplash.com/photo-1596178060810-72cb7cbeaa8c?q=80&w=600" class="w-full h-80 object-cover rounded shadow-md mt-8" alt="Treatment Station">
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. PREMIUM SERVICES & MENU VIEW -->
+        <div x-show="currentPage === 'services'" x-transition.duration.400ms class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-widest uppercase text-rosegold-600" x-text="t('menuPreTitle')"></span>
+                <h1 class="font-luxury text-3xl sm:text-5xl tracking-widest mt-2" x-text="t('menuTitle')"></h1>
+                <div class="w-20 h-[2px] bg-rosegold-500 mx-auto mt-4"></div>
+            </div>
+
+            <!-- Double Architecture Tab Headers Container -->
+            <div class="flex justify-center mb-12 border-b border-rosegold-500/20 max-w-md mx-auto">
+                <button @click="menuTab = 'salon'" :class="menuTab === 'salon' ? 'border-b-2 border-rosegold-500 text-rosegold-600 font-bold' : 'text-charcoal/50 dark:text-cream-200/50'" class="px-6 py-3 text-sm tracking-widest uppercase font-luxury transition-all" x-text="t('tabSalon')"></button>
+                <button @click="menuTab = 'cafe'" :class="menuTab === 'cafe' ? 'border-b-2 border-rosegold-500 text-rosegold-600 font-bold' : 'text-charcoal/50 dark:text-cream-200/50'" class="px-6 py-3 text-sm tracking-widest uppercase font-luxury transition-all" x-text="t('tabCafe')"></button>
+            </div>
+
+            <!-- SALON SERVICES TAB CONTENT -->
+            <div x-show="menuTab === 'salon'" x-transition class="space-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Category Column: Hair & Nails -->
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="font-luxury text-lg border-b border-rosegold-500/20 pb-2 text-rosegold-600 uppercase tracking-widest" x-text="t('cat_hair')"></h3>
+                            <div class="mt-4 space-y-4">
+                                <div class="flex justify-between items-baseline">
+                                    <div><h4 class="font-medium text-sm">Classic Styling & Blowdry</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Elite volume finish</p></div>
+                                    <span class="font-luxury text-sm text-rosegold-600">150 - 250 SR</span>
+                                </div>
+                                <div class="flex justify-between items-baseline">
+                                    <div><h4 class="font-medium text-sm">Royal Bridal Updo & Consultation</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Tailored majestic style</p></div>
+                                    <span class="font-luxury text-sm text-rosegold-600">600+ SR</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-luxury text-lg border-b border-rosegold-500/20 pb-2 text-rosegold-600 uppercase tracking-widest" x-text="t('cat_nails')"></h3>
+                            <div class="mt-4 space-y-4">
+                                <div class="flex justify-between items-baseline">
+                                    <div><h4 class="font-medium text-sm">Luxury Spa Mani-Pedi Ritual</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Exfoliation & custom gel glaze</p></div>
+                                    <span class="font-luxury text-sm text-rosegold-600">250 SR</span>
+                                </div>
+                                <div class="flex justify-between items-baseline">
+                                    <div><h4 class="font-medium text-sm">Elite Gel Extensions & Custom Art</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Hand-painted master designs</p></div>
+                                    <span class="font-luxury text-sm text-rosegold-600">350 SR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Category Column: Skincare & Spa Hammam -->
+                    <div class="space-y-8">
+                        <div>
+                            <h3 class="font-luxury text-lg border-b border-rosegold-500/20 pb-2 text-rosegold-600 uppercase tracking-widest" x-text="t('cat_spa')"></h3>
+                            <div class="mt-4 space-y-4">
+                                <div class="flex justify-between items-baseline">
+                                    <div><h4 class="font-medium text-sm">Advanced Collagen Glow Facial</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Deep cell renewal hydration</p></div>
+                                    <span class="font-luxury text-sm text-rosegold-600">350 SR</span>
+                                </div>
+                                <div class="flex justify-between items-baseline">
+                                    <div><h4 class="font-medium text-sm">Authentic Royal Moroccan Bath</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Traditional kessa scrub & herbal wraps</p></div>
+                                    <span class="font-luxury text-sm text-rosegold-600">450 SR</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CAFE SERVICES TAB CONTENT -->
+            <div x-show="menuTab === 'cafe'" x-transition class="space-y-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <!-- Specialty Coffee Tier -->
+                    <div>
+                        <h3 class="font-luxury text-lg border-b border-rosegold-500/20 pb-2 text-rosegold-600 uppercase tracking-widest">Specialty Coffee & Mixology</h3>
+                        <div class="mt-4 space-y-4">
+                            <div class="flex justify-between items-baseline">
+                                <div><h4 class="font-medium text-sm">Artisanal Espresso / Cortado</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Sourced premium single-origin beans</p></div>
+                                <span class="font-luxury text-sm text-rosegold-600">18 SR</span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <div><h4 class="font-medium text-sm">Signature Oreo Frappuccino</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Creamy luxury blend with rich dark chocolate</p></div>
+                                <span class="font-luxury text-sm text-rosegold-600">26 SR</span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <div><h4 class="font-medium text-sm">Aseel Premium Mojito 7up</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Infused wild berries & crisp fresh mint</p></div>
+                                <span class="font-luxury text-sm text-rosegold-600">24 SR</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Signature Desserts & Lounge Bites Tier -->
+                    <div>
+                        <h3 class="font-luxury text-lg border-b border-rosegold-500/20 pb-2 text-rosegold-600 uppercase tracking-widest">Signature Treats & Sandwiches</h3>
+                        <div class="mt-4 space-y-4">
+                            <div class="flex justify-between items-baseline">
+                                <div><h4 class="font-medium text-sm">Aseel Signature Honey Cake</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Multi-layered delicate crumb, signature filling</p></div>
+                                <span class="font-luxury text-sm text-rosegold-600">32 SR</span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <div><h4 class="font-medium text-sm">Artisan French Toast Crunch</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Brioche, salted warm caramel injection</p></div>
+                                <span class="font-luxury text-sm text-rosegold-600">38 SR</span>
+                            </div>
+                            <div class="flex justify-between items-baseline">
+                                <div><h4 class="font-medium text-sm">Gourmet Chicken Panini / Tuna Toast</h4><p class="text-xs text-charcoal/50 dark:text-cream-200/50">Toasted sourdough, elite herb dressing</p></div>
+                                <span class="font-luxury text-sm text-rosegold-600">34 SR</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Physical Resume Architecture Notice Display Grid Component -->
+            <div class="mt-16 p-8 bg-cream-100 dark:bg-black/30 border border-rosegold-500/10 rounded max-w-4xl mx-auto text-center">
+                <p class="text-xs tracking-widest text-rosegold-600 uppercase font-bold mb-2">Lounge Environment Vibe architecture</p>
+                <p class="text-xs text-charcoal/70 dark:text-cream-200 max-w-2xl mx-auto font-light leading-relaxed">
+                    Designed with elegant European neoclassical pillars, cascading warm crystal lights, and grand hanging clocks showing international fashion capitals (Paris, Milan, London). Comfortable leather lounge seating provides a perfect environment for social gatherings, premium bridal parties, or private study/work.
+                </p>
+            </div>
+        </div>
+
+        <!-- 4. PREMIUM RETAIL PRODUCTS CATALOG VIEW -->
+        <div x-show="currentPage === 'products'" x-transition.duration.400ms class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-widest uppercase text-rosegold-600" x-text="t('retailPreTitle')"></span>
+                <h1 class="font-luxury text-3xl sm:text-5xl tracking-widest mt-2" x-text="t('retailTitle')"></h1>
+                <div class="w-20 h-[2px] bg-rosegold-500 mx-auto mt-4"></div>
+            </div>
+
+            <!-- Signature Exclusives Focus Section -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+                <div class="bg-gradient-to-br from-rosegold-100 to-cream-200 dark:from-neutral-900 dark:to-charcoal p-8 rounded border border-rosegold-500/20 flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] tracking-widest uppercase bg-rosegold-500 text-white px-2 py-0.5 rounded font-bold">Exclusive Signature Treatment</span>
+                        <h3 class="font-luxury text-2xl mt-3 text-charcoal dark:text-white">Signature V60 Hair Therapy</h3>
+                        <p class="text-xs text-charcoal/70 dark:text-cream-200 mt-2 font-light leading-relaxed">
+                            Combining fresh botanical treatments custom-infused and slowly dripped right before your eyes to maximize active organic enzymes, revitalizing hair follicles and deeply cleansing the scalp.
+                        </p>
+                    </div>
+                    <span class="font-luxury text-lg text-rosegold-600 mt-4 block">Premium Lounge Care</span>
+                </div>
+                <div class="bg-gradient-to-br from-rosegold-100 to-cream-200 dark:from-neutral-900 dark:to-charcoal p-8 rounded border border-rosegold-500/20 flex flex-col justify-between">
+                    <div>
+                        <span class="text-[10px] tracking-widest uppercase bg-bronze text-white px-2 py-0.5 rounded font-bold">In-House Dessert Special</span>
+                        <h3 class="font-luxury text-2xl mt-3 text-charcoal dark:text-white">The Royal Honey Cake</h3>
+                        <p class="text-xs text-charcoal/70 dark:text-cream-200 mt-2 font-light leading-relaxed">
+                            A culinary masterpiece featuring ultra-delicate golden layers infused with pure organic honey cream, meticulously paired with your choice of premium specialty v60 brew at our exclusive women-only lounge.
+                        </p>
+                    </div>
+                    <span class="font-luxury text-lg text-rosegold-600 mt-4 block">Cafe Masterpiece</span>
+                </div>
+            </div>
+
+            <!-- 18 Premium Product Cards Structural Architecture Grid -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                <template x-for="product in productsList">
+                    <div class="bg-cream-100 dark:bg-black/20 rounded border border-rosegold-500/5 hover:border-rosegold-500/30 overflow-hidden flex flex-col justify-between p-4 shadow-xs hover:shadow-md transition-all">
+                        <div>
+                            <!-- Minimalist Premium Vector Placeholder Graphic Engine -->
+                            <div class="h-44 bg-neutral-200 dark:bg-neutral-800 rounded mb-4 flex items-center justify-center relative overflow-hidden group">
+                                <i class="fa-solid fa-sparkles absolute top-2 right-2 text-rosegold-500/40 text-xs"></i>
+                                <span class="font-luxury text-[10px] tracking-widest text-charcoal/30 dark:text-cream-100/30 group-hover:scale-110 transition-transform" x-text="product.name"></span>
+                            </div>
+                            <h3 class="font-luxury text-xs sm:text-sm tracking-wider line-clamp-1" x-text="product.name"></h3>
+                            <p class="text-[11px] text-charcoal/50 dark:text-cream-200/50 mt-1" x-text="product.size"></p>
+                        </div>
+                        <div class="mt-4">
+                            <div class="flex justify-between items-center mb-3">
+                                <span class="font-luxury text-sm text-rosegold-600" x-text="product.price + ' SR'"></span>
+                            </div>
+                            <button @click="triggerAddToCart(product.name)" class="w-full py-2 bg-charcoal dark:bg-rosegold-500 text-cream-100 dark:text-charcoal hover:bg-rosegold-600 dark:hover:bg-white dark:hover:text-charcoal text-[10px] tracking-widest uppercase font-semibold transition-colors rounded">
+                                <span x-text="t('addToCart')"></span>
+                            </button>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        <!-- 5. GALLERY MASONRY LIGHTBOX VIEW -->
+        <div x-show="currentPage === 'gallery'" x-transition.duration.400ms class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-widest uppercase text-rosegold-600" x-text="t('galleryPreTitle')"></span>
+                <h1 class="font-luxury text-3xl sm:text-5xl tracking-widest mt-2" x-text="t('galleryTitle')"></h1>
+                <div class="w-20 h-[2px] bg-rosegold-500 mx-auto mt-4"></div>
+            </div>
+
+            <!-- Interactive Core Grid Architecture -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="group relative overflow-hidden rounded shadow-sm cursor-pointer" @click="openLightbox('https://images.unsplash.com/photo-1633681926035-ec1ac984418a?q=80&w=1200', 'Salon Interior & Premium Styling Stations')">
+                    <img src="https://images.unsplash.com/photo-1633681926035-ec1ac984418a?q=80&w=600" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4 text-center">
+                        <span class="font-luxury text-xs text-white tracking-widest uppercase">Styling Stations</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded shadow-sm cursor-pointer" @click="openLightbox('https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=1200', 'Nail Art Studio Detail Architecture')">
+                    <img src="https://images.unsplash.com/photo-1604654894610-df63bc536371?q=80&w=600" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4 text-center">
+                        <span class="font-luxury text-xs text-white tracking-widest uppercase">Nail Lounge Art</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded shadow-sm cursor-pointer" @click="openLightbox('https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=1200', 'Elite Private Spa Hammam Vibe')">
+                    <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?q=80&w=600" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4 text-center">
+                        <span class="font-luxury text-xs text-white tracking-widest uppercase">Spa & Hammam Retreat</span>
+                    </div>
+                </div>
+                <div class="group relative overflow-hidden rounded shadow-sm cursor-pointer" @click="openLightbox('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1200', 'Exclusive Women In-House Cafe Specialty Lounge')">
+                    <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=600" class="w-full h-80 object-cover group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-charcoal/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-4 text-center">
+                        <span class="font-luxury text-xs text-white tracking-widest uppercase">Women's Elite Cafe</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Lightbox Modal Portal -->
+            <div x-show="lightboxOpen" class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4" @click="lightboxOpen = false" x-transition>
+                <button class="absolute top-6 right-6 text-white text-2xl"><i class="fa-solid fa-xmark"></i></button>
+                <div class="max-w-4xl text-center" @click.stop>
+                    <img :src="lightboxImg" class="max-h-[80vh] mx-auto rounded shadow-2xl">
+                    <p class="text-sm font-luxury text-rosegold-200 mt-4 tracking-widest uppercase" x-text="lightboxCaption"></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. HIGH-END CONCIERGE APPOINTMENT BOOKING FORM ENGINE -->
+        <div x-show="currentPage === 'booking'" x-transition.duration.400ms class="py-16 max-w-3xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <span class="text-xs tracking-widest uppercase text-rosegold-600" x-text="t('bookPreTitle')"></span>
+                <h1 class="font-luxury text-3xl sm:text-4xl tracking-widest mt-2" x-text="t('bookTitle')"></h1>
+                <div class="w-16 h-[2px] bg-rosegold-500 mx-auto mt-4"></div>
+            </div>
+
+            <form @submit.prevent="submitBooking()" class="bg-cream-100 dark:bg-black/20 p-6 sm:p-10 rounded border border-rosegold-500/10 space-y-6">
+                <!-- Service Selection Component Dynamic dropdown -->
+                <div>
+                    <label class="block text-xs font-bold tracking-widest uppercase mb-2 text-charcoal/70 dark:text-cream-100">Select Service Area / Experience</label>
+                    <select required class="w-full p-3 text-sm rounded bg-white dark:bg-neutral-900 border border-rosegold-500/20 focus:outline-none focus:border-rosegold-500 text-charcoal dark:text-cream-100">
+                        <option value="">Choose an elite service...</option>
+                        <option value="hair">Premium Hair Makeover & Styling</option>
+                        <option value="nails">Luxury Spa Mani-Pedi Treatment</option>
+                        <option value="spa">Authentic Moroccan Bath / Hammam</option>
+                        <option value="bridal">Exclusive Bridal/VIP Package Coordination</option>
+                        <option value="cafe">Cafe Lounge Table Reservation</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold tracking-widest uppercase mb-2 text-charcoal/70 dark:text-cream-100">Preferred Date</label>
+                        <input type="date" required class="w-full p-3 text-sm rounded bg-white dark:bg-neutral-900 border border-rosegold-500/20 text-charcoal dark:text-cream-100 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold tracking-widest uppercase mb-2 text-charcoal/70 dark:text-cream-100">Preferred Time</label>
+                        <input type="time" required class="w-full p-3 text-sm rounded bg-white dark:bg-neutral-900 border border-rosegold-500/20 text-charcoal dark:text-cream-100 focus:outline-none">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold tracking-widest uppercase mb-2 text-charcoal/70 dark:text-cream-100">Elite Stylist / Specialist Preference</label>
+                    <select class="w-full p-3 text-sm rounded bg-white dark:bg-neutral-900 border border-rosegold-500/20 text-charcoal dark:text-cream-100 focus:outline-none">
+                        <option value="any">First Available Master Specialist</option>
+                        <option value="senior">Senior Hair Designer Expert</option>
+                        <option value="spa_master">Moroccan Hammam Certified Ritualist</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold tracking-widest uppercase mb-2 text-charcoal/70 dark:text-cream-100">VIP Private Accommodations & Notes</label>
+                    <textarea rows="3" placeholder="Specify if you require a Private VIP room, bridal group configurations, or specialty coffee preferences..." class="w-full p-3 text-sm rounded bg-white dark:bg-neutral-900 border border-rosegold-500/20 text-charcoal dark:text-cream-100 focus:outline-none"></textarea>
+                </div>
+
+                <button type="submit" class="w-full py-4 bg-rosegold-500 text-charcoal font-bold text-xs tracking-widest uppercase rounded shadow-md hover:bg-charcoal hover:text-white dark:hover:bg-white dark:hover:text-charcoal transition-all">
+                    Confirm Concierge Reservation
+                </button>
+            </form>
+        </div>
+
+        <!-- 7. CONTACT & LOCATION VIEW -->
+        <div x-show="currentPage === 'contact'" x-transition.duration.400ms class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span class="text-xs tracking-widest uppercase text-rosegold-600" x-text="t('contactPreTitle')"></span>
+                <h1 class="font-luxury text-3xl sm:text-5xl tracking-widest mt-2" x-text="t('contactTitle')"></h1>
+                <div class="w-20 h-[2px] bg-rosegold-500 mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start mb-16">
+                <!-- Location details metadata context -->
+                <div class="space-y-8 bg-cream-100 dark:bg-black/20 p-8 rounded border border-rosegold-500/5">
+                    <div>
+                        <h3 class="font-luxury text-lg text-rosegold-600 mb-2">Aseel Palace Location</h3>
+                        <p class="text-sm font-light leading-relaxed text-charcoal/80 dark:text-cream-100">
+                            King Faisal bin Abdul Aziz Rd, Al Muhammadiyah,<br>Hafar Al Batin 39911, Saudi Arabia
+                        </p>
+                    </div>
+                    <div>
+                        <h3 class="font-luxury text-lg text-rosegold-600 mb-2">Operational Timing</h3>
+                        <p class="text-sm font-light text-charcoal/80 dark:text-cream-100">Open Daily: 10:00 AM – 10:00 PM</p>
+                    </div>
+                    <div>
+                        <h3 class="font-luxury text-lg text-rosegold-600 mb-2">Direct Concierge Link</h3>
+                        <div class="flex flex-col space-y-2 text-sm">
+                            <a href="tel:+966503846665" class="hover:text-rosegold-500 transition-colors"><i class="fa-solid fa-phone mr-2 rtl:ml-2"></i> +966 50 384 6665</a>
+                            <a href="https://wa.me/966503846665" target="_blank" class="hover:text-rosegold-500 transition-colors"><i class="fa-brands fa-whatsapp mr-2 rtl:ml-2 text-green-600"></i> WhatsApp Concierge Chat</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Google Maps Interactive Anchor Frame -->
+                <div class="h-80 w-full bg-neutral-200 rounded overflow-hidden shadow-sm relative border border-rosegold-500/20">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3513.2356501501704!2d45.9562!3d28.4325!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjjCsDI1JzU3LjAiTiA0NcKwNTcnMjIuMyJF!5e0!3m2!1sen!2ssa!4v1680000000000!5m2!1sen!2ssa" class="w-full h-full border-0 grayscale dark:invert" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+            <!-- FAQ Component Area -->
+            <div class="max-w-3xl mx-auto space-y-4">
+                <h3 class="font-luxury text-xl text-center mb-6 tracking-wide">Frequently Asked Sanctuary Questions</h3>
+                <div class="border border-rosegold-500/10 rounded p-4 bg-cream-100 dark:bg-black/10">
+                    <h4 class="font-luxury text-sm tracking-wide text-rosegold-600">Do I need a reservation to access the Women's Cafe?</h4>
+                    <p class="text-xs text-charcoal/70 dark:text-cream-200 mt-2 font-light">Walk-ins are welcomed warmly, although luxury service coordination reservations ensure maximum elite privacy during peak weekend operations.</p>
+                </div>
+                <div class="border border-rosegold-500/10 rounded p-4 bg-cream-100 dark:bg-black/10">
+                    <h4 class="font-luxury text-sm tracking-wide text-rosegold-600">Are the salon spa treatments completely organic?</h4>
+                    <p class="text-xs text-charcoal/70 dark:text-cream-200 mt-2 font-light">Yes, Aseel Palace utilizes premium, world-renowned organic product compositions globally sourced to guarantee immaculate health protection.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- PREMIUM COMPREHENSIVE FOOTER ARCHITECTURE -->
+    <footer class="bg-charcoal text-cream-200 dark:bg-black border-t border-rosegold-500/20 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-12">
+            <div class="space-y-4 text-center md:text-left rtl:md:text-right">
+                <span class="font-luxury text-xl tracking-widest text-white block">ASEEL PALACE</span>
+                <p class="text-xs text-cream-200/60 font-light leading-relaxed" x-text="t('footerAbout')"></p>
+            </div>
+            <div class="text-center md:text-left rtl:md:text-right">
+                <h4 class="font-luxury text-xs text-rosegold-500 tracking-widest uppercase mb-4">Navigation</h4>
+                <ul class="text-xs space-y-2 font-light text-cream-200/80">
+                    <li><button @click="currentPage='about'; window.scrollTo(0,0)" class="hover:text-white transition-colors">Our Story</button></li>
+                    <li><button @click="currentPage='services'; window.scrollTo(0,0)" class="hover:text-white transition-colors">Salon & Cafe Menu</button></li>
+                    <li><button @click="currentPage='products'; window.scrollTo(0,0)" class="hover:text-white transition-colors">Boutique Retail</button></li>
+                </ul>
+            </div>
+            <div class="text-center md:text-left rtl:md:text-right">
+                <h4 class="font-luxury text-xs text-rosegold-500 tracking-widest uppercase mb-4">Location & Contact</h4>
+                <p class="text-xs font-light text-cream-200/70 leading-relaxed">
+                    King Faisal bin Abdul Aziz Rd,<br>Al Muhammadiyah, Hafar Al Batin<br>
+                    <span class="block mt-2 font-medium text-white">T: +966 50 384 6665</span>
+                </p>
+            </div>
+            <div class="text-center md:text-left rtl:md:text-right space-y-4">
+                <h4 class="font-luxury text-xs text-rosegold-500 tracking-widest uppercase mb-2">Connect Socially</h4>
+                <div class="flex justify-center md:justify-start space-x-4 rtl:space-x-reverse text-lg">
+                    <a href="https://instagram.com" target="_blank" class="hover:text-rosegold-500 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://wa.me/966503846665" target="_blank" class="hover:text-rosegold-500 transition-colors"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-12 pt-6 border-t border-cream-100/5 text-center text-[10px] tracking-widest text-cream-200/40 uppercase">
+            &copy; 2026 Aseel Palace. All Rights Reserved. Crafted with elite Saudi luxury standards.
+        </div>
+    </footer>
+
+    <!-- MOBILE STICKY FLOATING预约 BAR -->
+    <div class="lg:hidden fixed bottom-0 inset-x-0 bg-cream-50/95 dark:bg-charcoal/95 backdrop-blur border-t border-rosegold-500/20 p-3 z-40 flex justify-between items-center px-6">
+        <div class="flex flex-col">
+            <span class="text-[10px] uppercase text-rosegold-600 font-bold">Elite Privacy</span>
+            <span class="text-xs text-charcoal dark:text-white font-luxury">Closes 10:00 PM</span>
+        </div>
+        <button @click="currentPage = 'booking'; window.scrollTo(0,0)" class="bg-rosegold-500 text-charcoal px-6 py-2.5 text-xs font-bold uppercase tracking-widest rounded shadow-md">
+            <span x-text="t('bookNow')"></span>
+        </button>
+    </div>
+
+    <!-- NOTIFICATION SYSTEM MODAL DIALOG -->
+    <div x-show="notificationOpen" class="fixed bottom-24 right-6 bg-charcoal text-cream-100 dark:bg-rosegold-500 dark:text-charcoal px-6 py-4 rounded shadow-2xl z-50 text-xs tracking-wide max-w-sm" x-transition>
+        <div class="flex items-center space-x-3 rtl:space-x-reverse">
+            <i class="fa-solid fa-circle-check text-base"></i>
+            <span x-text="notificationMsg"></span>
+        </div>
+    </div>
+
+    <!-- ARCHITECTURE CONTROLLER STATE LOGIC SCRIPTS -->
+    <script>
+        function appState() {
+            return {
+                currentPage: 'home',
+                lang: 'en',
+                darkMode: true,
+                mobileMenuOpen: false,
+                menuTab: 'salon',
+                
+                // Lightbox properties
+                lightboxOpen: false,
+                lightboxImg: '',
+                lightboxCaption: '',
+
+                // Alert notification properties
+                notificationOpen: false,
+                notificationMsg: '',
+
+                // 18 Premium Products Reactive Data Arrays Catalog
+                productsList: [
+                    { name: 'Argan Hair Mask (Premium Oil Treatment)', size: '250g', price: 51 },
+                    { name: 'Keratin Repair Serum', size: '250g', price: 51 },
+                    { name: 'Collagen Face Cream', size: '250g', price: 53 },
+                    { name: 'Luxury Body Scrub (Dead Sea Minerals)', size: '250g', price: 54 },
+                    { name: 'Professional Hair Elixir', size: '250g', price: 56 },
+                    { name: 'Vitamin C Brightening Serum', size: '250g', price: 45 },
+                    { name: 'Organic Herbal Hair Oil', size: '250g', price: 45 },
+                    { name: 'Moisturizing Hand & Nail Balm', size: '250g', price: 67 },
+                    { name: 'Hydrating Facial Mist', size: '250g', price: 51 },
+                    { name: 'Royal Moroccan Black Soap', size: '250g', price: 45 },
+                    { name: 'Tea Tree Scalp Detox Scrub', size: '250g', price: 62 },
+                    { name: 'Hyaluronic Acid Booster', size: '250g', price: 45 },
+                    { name: 'Premium Oud Body Lotion', size: '250g', price: 70 },
+                    { name: 'Soothing Aloe Vera After-Spa Gel', size: '250g', price: 45 },
+                    { name: 'Biomimetic Hair Peptide Spray', size: '250g', price: 51 },
+                    { name: 'Nourishing Eyelash Growth Serum', size: '250g', price: 58 },
+                    { name: 'Luxury Cuticle Repair Oil', size: '250g', price: 41 },
+                    { name: 'Aseel Palace Signature Glow Oil', size: '250g', price: 70 }
+                ],
+
+                // Localization Dictionary translations translation matrix
+                dictionary: {
+                    en: {
+                        topBar: 'EXPERIENCE ELITE PRIVACY & ROYAL CARE IN HAFAR AL BATIN',
+                        bookNow: 'BOOK APPOINTMENT',
+                        eliteReputation: '4.7 STARS METICULOUS REPUTATION',
+                        heroTitle: 'THE ROYAL MAJESTIC <br><span class="text-rosegold-500">WOMEN SANCTUARY</span>',
+                        heroSubtitle: 'A specialized premium beauty center, serene spa lounge, and an exclusive in-house upscale ladies specialty coffee cafe inside Hafar Al Batin.',
+                        bookAppointment: 'BOOK AN APPOINTMENT',
+                        viewMenu: 'VIEW SERVICES & CAFE MENU',
+                        nav_home: 'Home', nav_about: 'Our Story', nav_services: 'Services & Cafe', nav_products: 'Boutique', nav_gallery: 'Gallery', nav_contact: 'Connect',
+                        feature1_title: 'Elite Specialists', feature1_desc: 'International high-end care methodologies.',
+                        feature2_title: 'Exclusive Cafe Lounge', feature2_desc: 'Premium specialty v60 & multi-layered honey cakes.',
+                        feature3_title: 'Absolute Privacy', feature3_desc: 'Designed elegantly for elite women gatherings.',
+                        experienceTitle: 'DISCOVER IMMACULATE LUXURY', experienceSubtitle: 'Designed Architectural Care Zones',
+                        cat_hair: 'Hair Design & Therapy', cat_hair_desc: 'From high-fashion styling to our structural V60 Hair treatments.',
+                        cat_nails: 'Nail Art Lounge', cat_nails_desc: 'Impeccable clinical manicures, custom gel extensions, and organic care.',
+                        cat_spa: 'Moroccan Bath & Spa', cat_spa_desc: 'Immersive therapeutic cleansing using authentic herbs and traditional scrubs.',
+                        cat_cafe: 'Ladies Boutique Cafe', cat_cafe_desc: 'An upscale social lounge matching specialty espresso with gourmet sweets.',
+                        exploreMore: 'EXPLORE EXPERIENCE',
+                        galleryPreTitle: 'THE INSTAGRAM AESTHETIC VISUALS', galleryTitle: 'Sanctuary Interior Architecture',
+                        viewFullGallery: 'View Full Gallery',
+                        localReputationNote: 'METICULOUS ELITE LOCAL SATISFACTION SCORING RATING',
+                        testimonialText: 'Aseel Palace is completely transcendent! The Moroccan bath relaxation is magnificent, and concluding the transformation layout inside their private boutique coffee lounge while drinking custom v60 is the peak of luxury in Hafar Al Batin.',
+                        aboutPreTitle: 'WELCOME TO THE PALACE', aboutTitle: 'Elite Social Longevity Sanctuary',
+                        aboutHeading: 'Bridging World-Class Care With Social Serenity',
+                        aboutBody: 'Amid Hafar Al Batin’s evolving lifestyle scene, Aseel Palace stands out as a luxurious sanctuary designed exclusively for women. We bridge the gap between world-class personal care and social relaxation by offering a specialized beauty center, a serene spa, and an upscale women\'s cafe all within one majestic location. It is a place where you can get a premium makeover, indulge in authentic Moroccan baths, and then wind down with a specialty coffee in total privacy and comfort. Our beauty menu uses only high-end, organic products sourced globally, delivered by an elite team of beauty specialists.',
+                        ourMission: 'The Crown Promise', missionBody: 'To secure uncompromising pristine clinical safety, ultimate premium privacy, and sensory wellness comfort for every modern woman.',
+                        menuPreTitle: 'THE SELECTIONS ARCHITECTURE', menuTitle: 'Salon Offerings & Cafe Menu',
+                        tabSalon: 'Salon & Spa Services', tabCafe: 'Boutique Cafe Menu',
+                        retailPreTitle: 'PREMIUM HOME CARE BOUTIQUE', retailTitle: 'The Luxury Product Catalog',
+                        addToCart: 'ADD TO LUXURY CART',
+                        bookPreTitle: 'CONCIERGE SCHEDULING', bookTitle: 'Secure Elite Priority Access',
+                        contactPreTitle: 'VISIT THE PALACE', contactTitle: 'Location Coordinates',
+                        footerAbout: 'A specialized women\'s beauty center combined with an exclusive in-house women\'s cafe inside Hafar Al Batin.'
+                    },
+                    ar: {
+                        topBar: 'تجربة الخصوصية التامة والعناية الملكية الفاخرة في حفر الباطن',
+                        bookNow: 'احجزي موعدك الآن',
+                        eliteReputation: 'تقييم متميز بمعدل 4.7 نجوم من العميلات',
+                        heroTitle: 'الملاذ الملكي الفاخر <br><span class="text-rosegold-500">للعناية بالمرأة</span>',
+                        heroSubtitle: 'مركز نسائي فاخر متخصص بالعناية بالمرأة وكوفي نسائي حصري يقدم أرقى خدمات الجمال والاسترخاء الاجتماعي في حفر الباطن.',
+                        bookAppointment: 'حجز موعد فاخر',
+                        viewMenu: 'استكشاف الخدمات وقائمة الكوفي',
+                        nav_home: 'الرئيسية', nav_about: 'قصتنا', nav_services: 'الخدمات والكوفي', nav_products: 'المنتجات', nav_gallery: 'المعرض', nav_contact: 'اتصلي بنا',
+                        feature1_title: 'خبيرات متميزات', feature1_desc: 'أرقى أساليب العناية العالمية بأيدي أفضل الأخصائيات.',
+                        feature2_title: 'كوفي نسائي حصري', feature2_desc: 'قهوة مختصة V60 وكيكة العسل الفاخرة لتجربة استرخاء فريدة.',
+                        feature3_title: 'خصوصية مطلقة تامة', feature3_desc: 'مصمم برقي تام ليناسب اجتماعات ومناسبات السيدات الراقية.',
+                        experienceTitle: 'اكتشفي الفخامة المطلقة', experienceSubtitle: 'أقسام العناية المصممة بعناية',
+                        cat_hair: 'عناية وتصميم الشعر', cat_hair_desc: 'بدءاً من التصفيف العصري الفاخر وصولاً إلى علاج V60 النباتي المبتكر لحيوية الشعر.',
+                        cat_nails: 'صالون العناية بالأظافر', cat_nails_desc: 'خدمات مناكير وباديكير متكاملة باستخدام أفضل المواد العضوية العالمية.',
+                        cat_spa: 'الحمام المغربي والسبا', cat_spa_desc: 'جلسات تنظيف وتقشير استثنائية باستخدام الأعشاب والخلطات المغربية التقليدية الأصيلة.',
+                        cat_cafe: 'الكوفي النسائي الفاخر', cat_cafe_desc: 'ملتقى اجتماعي راقٍ يجمع بين القهوة المختصة والحلويات الفاخرة في أجواء هادئة.',
+                        exploreMore: 'استكشفي الخدمة',
+                        galleryPreTitle: 'جمال التفاصيل المستوحاة من بينتريست', galleryTitle: 'معرض التفاصيل والفخامة المعمارية',
+                        viewFullGallery: 'عرض المعرض بالكامل',
+                        localReputationNote: 'مؤشر رضا العميلات الأعلى والافتخر في المنطقة',
+                        testimonialText: 'مركز أسيل بالاس هو قمة الفخامة والراحة في حفر الباطن! الحمام المغربي لا يعلى عليه، والاسترخاء بعد الجلسة في الكوفي النسائي الخاص بالمركز مع كوب من القهوة المختصة V60 هو تجربة ملكية بامتياز.',
+                        aboutPreTitle: 'مرحباً بكِ في القصر', aboutTitle: 'ملاذ الاسترخاء والجمال الاجتماعي الأول',
+                        aboutHeading: 'نجمع بين العناية العالمية والاسترخاء الاجتماعي الراقي',
+                        aboutBody: 'في قلب أسلوب الحياة المتطور في حفر الباطن، يبرز مركز أسيل بالاس كوجهة فاخرة وملاذ هادئ مصمم خصيصاً للمرأة. لقد أحدثنا نقلة نوعية في مفهوم العناية الشخصية عبر دمج مركز تجميل متكامل وسبا هادئ مع كوفي نسائي راقٍ وحصري في موقع مهيب واحد. إنه المكان المثالي الذي يتيح لكِ الحصول على إطلالة متميزة، والاستمتاع بجلسات الحمام المغربي الأصيل، ثم الاسترخاء وتناول القهوة المختصة في أجواء مفعمة بالخصوصية والراحة التامة. نعتمد في جميع خدماتنا على منتجات عضوية فاخرة ومستوردة عالمياً تقدمها نخبة من خبيرات التجميل.',
+                        ourMission: 'وعد قصر أسيل', missionBody: 'ضمان أعلى معايير الأمان الصحي، الخصوصية التامة، والراحة النفسية والجسدية لكل سيدة.',
+                        menuPreTitle: 'كتالوج الخدمات المنظم', menuTitle: 'قائمة خدمات الصالون والسبا والكوفي',
+                        tabSalon: 'خدمات الصالون والسبا', tabCafe: 'منيو الكوفي النسائي الفاخر',
+                        retailPreTitle: 'بوتيك العناية المنزلية الفاخر', retailTitle: 'كتالوج المنتجات الحصري للبيع',
+                        addToCart: 'إضافة إلى حقيبة المشتريات',
+                        bookPreTitle: 'منظومة الحجز الفاخر المسبق', bookTitle: 'احجزي مكانكِ وضمني أولويتكِ المطلقة',
+                        contactPreTitle: 'تفضلي بزيارتنا', contactTitle: 'إحداثيات الموقع والاتصال الفوري',
+                        footerAbout: 'مركز نسائي متخصص بالعناية بالمرأة وكوفي نسائي حصري في حفر الباطن يقدم تجربة ملكية متكاملة.'
+                    }
+                },
+
+                t(key) {
+                    return this.dictionary[this.lang][key] || key;
+                },
+
+                toggleLang() {
+                    this.lang = this.lang === 'en' ? 'ar' : 'en';
+                },
+
+                openLightbox(imgUrl, caption) {
+                    this.lightboxImg = imgUrl;
+                    this.lightboxCaption = caption;
+                    this.lightboxOpen = true;
+                },
+
+                triggerAddToCart(pName) {
+                    this.notificationMsg = `${pName} added to premium catalog selection basket successfully.`;
+                    this.notificationOpen = true;
+                    setTimeout(() => { this.notificationOpen = false; }, 3500);
+                },
+
+                submitBooking() {
+                    alert(this.lang === 'en' ? 'Concierge Reservation Submitted Successfully! We will confirm your elite slot via WhatsApp.' : 'تم إرسال طلب الحجز بنجاح! ستتواصل معكِ منسقة القصر عبر الواتساب لتأكيد الموعد.');
+                    this.currentPage = 'home';
+                    window.scrollTo(0,0);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
