@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aseel Palace | Luxury Beauty Sanctuary</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cream: '#FDFBF7',
+                        beige: '#F5EBE6',
+                        rosegold: '#E0A899',
+                        charcoal: '#2C2523',
+                    },
+                    fontFamily: {
+                        serif: ['Cormorant Garamond', 'serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        arabic: ['Cairo', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #FDFBF7;
+            color: #2C2523;
+        }
+        [x-cloak] { display: none !important; }
+        .lang-ar .font-serif { font-family: 'Cairo', sans-serif; font-weight: 700; }
+        .lang-ar .font-sans { font-family: 'Cairo', sans-serif; }
+        .masonry-grid { display: columns; column-gap: 1.5rem; column-count: 3; }
+        @media (max-width: 768px) { .masonry-grid { column-count: 1; } }
+    </style>
+</head>
+<body x-data="{ 
+    lang: 'en', 
+    mobileMenu: false,
+    activeTab: 'all',
+    bookingStep: 1,
+    bookingData: { service: '', staff: '', date: '', time: '', name: '', phone: '' },
+    translations: {
+        en: {
+            brandName: 'Aseel Palace',
+            tagline: 'Luxury Beauty Sanctuary',
+            bookNow: 'Book Appointment',
+            exploreMenu: 'Explore Services',
+            home: 'Home', about: 'Our Story', services: 'Services', gallery: 'Gallery', contact: 'Contact Us',
+            aboutHeading: 'Redefining Saudi Luxury Self-Care',
+            aboutBody: 'Located in the heart of Hafr Al Batin, Aseel Palace is a premium women-owned sanctuary crafted for those who demand uncompromising beauty mastery.',
+            hours: 'Opening Hours: 3:00 PM - 10:00 PM Daily'
+        },
+        ar: {
+            brandName: 'مركز أسيل بالاس',
+            tagline: 'ملاذ الفخامة والجمال المطلق',
+            bookNow: 'حجز موعد فاخر',
+            exploreMenu: 'اكتشفي الخدمات',
+            home: 'الرئيسية', about: 'قصتنا', services: 'قائمة الخدمات', gallery: 'المعرض', contact: 'اتصلي بنا',
+            aboutHeading: 'إعادة تعريف العناية الفاخرة بالذات',
+            aboutBody: 'يقع مركز أسيل بالاس في قلب حفر الباطن، وهو ملاذ نسائي راقٍ مصمم خصيصاً لمن يبحثن عن الإتقان المطلق والرفاهية العالية.',
+            hours: 'أوقات العمل: ٣:٠٠ مساءً - ١٠:٠٠ مساءً يومياً'
+        }
+    }
+}" :class="lang == 'ar' ? 'lang-ar' : ''" :dir="lang == 'ar' ? 'rtl' : 'ltr'" class="bg-cream text-charcoal">
+
+    <a href="https://wa.me/966503846665" target="_blank" class="fixed bottom-6 right-6 z-50 bg-[#25D366] text-white p-4 rounded-full shadow-2xl transition-transform hover:scale-110 flex items-center justify-center">
+        <i class="fab fa-whatsapp text-2xl"></i>
+    </a>
+
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <a href="#" class="flex flex-col">
+                <span class="font-serif text-2xl md:text-3xl tracking-[0.2em] font-light uppercase" x-text="translations[lang].brandName"></span>
+                <span class="text-[9px] uppercase tracking-[0.4em] text-rosegold mt-0.5" x-text="translations[lang].tagline"></span>
+            </a>
+
+            <nav class="hidden md:flex items-center space-x-8 rtl:space-x-reverse font-sans text-xs uppercase tracking-widest font-medium">
+                <a href="#" class="hover:text-rosegold transition-colors" x-text="translations[lang].home"></a>
+                <a href="#about" class="hover:text-rosegold transition-colors" x-text="translations[lang].about"></a>
+                <a href="#services" class="hover:text-rosegold transition-colors" x-text="translations[lang].services"></a>
+                <a href="#gallery" class="hover:text-rosegold transition-colors" x-text="translations[lang].gallery"></a>
+                <a href="#contact" class="hover:text-rosegold transition-colors" x-text="translations[lang].contact"></a>
+            </nav>
+
+            <div class="hidden md:flex items-center space-x-4 rtl:space-x-reverse">
+                <button @click="lang = (lang === 'en' ? 'ar' : 'en')" class="text-xs uppercase tracking-widest border border-gray-200 px-3 py-1.5 rounded hover:bg-gray-50 transition-all font-medium">
+                    <span x-show="lang === 'en'">العربية</span>
+                    <span x-show="lang === 'ar'">English</span>
+                </button>
+                <a href="#booking" class="bg-charcoal text-cream text-xs uppercase tracking-widest px-6 py-3 rounded hover:bg-rosegold transition-all duration-300 font-semibold" x-text="translations[lang].bookNow"></a>
+            </div>
+
+            <button @click="mobileMenu = !mobileMenu" class="md:hidden text-charcoal">
+                <i class="fa-solid text-xl" :class="mobileMenu ? 'fa-xmark' : 'fa-bars-staggered'"></i>
+            </button>
+        </div>
+    </header>
+
+    <section class="relative h-[85vh] flex items-center justify-center overflow-hidden bg-charcoal">
+        <div class="absolute inset-0 opacity-50">
+            <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=1600&q=80" alt="Aseel Palace Salon" class="w-full h-full object-cover">
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-charcoal via-transparent to-black/40"></div>
+        
+        <div class="relative z-10 text-center px-4 max-w-4xl mx-auto">
+            <span class="text-rosegold uppercase tracking-[0.5em] text-xs md:text-sm font-semibold block mb-4" x-text="translations[lang].tagline"></span>
+            <h1 class="font-serif text-4xl md:text-7xl text-cream font-light tracking-wide mb-8" x-text="translations[lang].brandName"></h1>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#booking" class="w-full sm:w-auto bg-rosegold text-charcoal font-sans text-xs uppercase tracking-widest font-semibold px-8 py-4 rounded shadow-lg" x-text="translations[lang].bookNow"></a>
+                <a href="#services" class="w-full sm:w-auto border border-white/40 text-white font-sans text-xs uppercase tracking-widest font-semibold px-8 py-4 rounded backdrop-blur-sm" x-text="translations[lang].exploreMenu"></a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="py-20 bg-cream">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6">
+                <span class="text-xs uppercase tracking-[0.3em] text-rosegold font-bold block">OUR STORY</span>
+                <h2 class="font-serif text-3xl md:text-4xl text-charcoal font-light" x-text="translations[lang].aboutHeading"></h2>
+                <p class="text-charcoal/80 leading-relaxed text-sm md:text-base font-light" x-text="translations[lang].aboutBody"></p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <img src="https://images.unsplash.com/photo-1522337360788-8b13edd793be?auto=format&fit=crop&w=600&q=80" alt="Salon Interior Layout" class="rounded-lg object-cover h-64 w-full shadow-sm">
+                <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?auto=format&fit=crop&w=600&q=80" alt="Premium Hair Styling" class="rounded-lg object-cover h-64 w-full pt-8 shadow-sm">
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="font-serif text-3xl md:text-4xl text-charcoal font-light" x-text="lang === 'en' ? 'Signature Treatments' : 'خدماتنا الاستثنائية'"></h2>
+                <div class="w-12 h-[1px] bg-rosegold mx-auto mt-4"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=600&q=80" alt="Hair Treatment" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <h3 class="font-serif text-xl mb-2 text-charcoal" x-text="lang === 'en' ? 'Royal Hair Blowout' : 'تسريحة وسيشوار رويال'"></h3>
+                        <p class="text-xs text-gray-500 font-light mb-4">150 SAR</p>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button @click="bookingData.service = 'Royal Hair Blowout'; bookingStep = 2; document.getElementById('booking').scrollIntoView();" class="w-full border border-rosegold text-charcoal text-[11px] uppercase tracking-widest py-2.5 rounded hover:bg-rosegold hover:text-white transition-colors" x-text="lang === 'en' ? 'Select Service' : 'اختيار الخدمة'"></button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1604654894610-df490651e56c?auto=format&fit=crop&w=600&q=80" alt="Nail Art" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <h3 class="font-serif text-xl mb-2 text-charcoal" x-text="lang === 'en' ? 'Russian Manicure' : 'مناكير روسي فاخر'"></h3>
+                        <p class="text-xs text-gray-500 font-light mb-4">250 SAR</p>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button @click="bookingData.service = 'Russian Manicure'; bookingStep = 2; document.getElementById('booking').scrollIntoView();" class="w-full border border-rosegold text-charcoal text-[11px] uppercase tracking-widest py-2.5 rounded hover:bg-rosegold hover:text-white transition-colors" x-text="lang === 'en' ? 'Select Service' : 'اختيار الخدمة'"></button>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=600&q=80" alt="Makeup Session" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6 flex-grow">
+                        <h3 class="font-serif text-xl mb-2 text-charcoal" x-text="lang === 'en' ? 'Glamour Makeup' : 'مكياج سهرة سينمائي'"></h3>
+                        <p class="text-xs text-gray-500 font-light mb-4">500 SAR</p>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button @click="bookingData.service = 'Glamour Makeup'; bookingStep = 2; document.getElementById('booking').scrollIntoView();" class="w-full border border-rosegold text-charcoal text-[11px] uppercase tracking-widest py-2.5 rounded hover:bg-rosegold hover:text-white transition-colors" x-text="lang === 'en' ? 'Select Service' : 'اختيار الخدمة'"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="booking" class="py-20 bg-charcoal text-cream">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-white/5 p-8 rounded-xl border border-white/10 backdrop-blur-md">
+                <div x-show="bookingStep === 1">
+                    <p class="text-sm text-center mb-6" x-text="lang === 'en' ? 'Select a service above or proceed to general booking.' : 'يرجى اختيار خدمة من الأعلى أو المتابعة للحجز العام.'"></p>
+                    <div class="text-center">
+                        <button @click="bookingStep = 2" class="bg-rosegold text-charcoal font-sans text-xs uppercase tracking-widest font-bold px-6 py-3 rounded" x-text="lang === 'en' ? 'Proceed to Booking' : 'المتابعة للحجز'"></button>
+                    </div>
+                </div>
+
+                <div x-show="bookingStep === 2" x-cloak class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-white/60 mb-2">Selected Service</label>
+                            <input type="text" x-model="bookingData.service" class="w-full bg-[#2C2523] border border-white/20 rounded p-3 text-sm text-white" readonly>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-white/60 mb-2">Select Date</label>
+                            <input type="date" x-model="bookingData.date" class="w-full bg-[#2C2523] border border-white/20 rounded p-3 text-sm text-white">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button @click="bookingStep = 1" class="text-xs uppercase tracking-widest text-white/60">Back</button>
+                        <button @click="bookingStep = 3" class="bg-rosegold text-charcoal font-sans text-xs uppercase tracking-widest font-bold px-6 py-3 rounded">Next</button>
+                    </div>
+                </div>
+
+                <div x-show="bookingStep === 3" x-cloak class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-white/60 mb-2">Name</label>
+                            <input type="text" x-model="bookingData.name" class="w-full bg-[#2C2523] border border-white/20 rounded p-3 text-sm text-white">
+                        </div>
+                        <div>
+                            <label class="block text-[10px] uppercase tracking-widest text-white/60 mb-2">Phone</label>
+                            <input type="tel" x-model="bookingData.phone" class="w-full bg-[#2C2523] border border-white/20 rounded p-3 text-sm text-white">
+                        </div>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <button @click="bookingStep = 2" class="text-xs uppercase tracking-widest text-white/60">Back</button>
+                        <a :href="'https://wa.me/966503846665?text=' + encodeURIComponent('Appointment Request:\n- Service: ' + bookingData.service + '\n- Date: ' + bookingData.date + '\n- Name: ' + bookingData.name + '\n- Phone: ' + bookingData.phone)" target="_blank" class="bg-[#25D366] text-white font-sans text-xs uppercase tracking-widest font-bold px-6 py-3 rounded flex items-center space-x-2">
+                            <i class="fab fa-whatsapp"></i>
+                            <span x-text="lang === 'en' ? 'Confirm via WhatsApp' : 'تأكيد عبر واتساب'"></span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="py-20 bg-cream">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs uppercase tracking-[0.3em] text-rosegold font-bold" x-text="lang === 'en' ? 'VISUAL INSPIRATION' : 'معرض الفخومة والجمال'"></span>
+                <h2 class="font-serif text-3xl md:text-4xl text-charcoal font-light mt-2" x-text="lang === 'en' ? 'Atmosphere & Detail' : 'أجواء وتفاصيل المركز'"></h2>
+                <div class="w-12 h-[1px] bg-rosegold mx-auto mt-4"></div>
+            </div>
+
+            <div class="masonry-grid space-y-6">
+                <div class="break-inside-avoid mb-6 overflow-hidden rounded-xl shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?auto=format&fit=crop&w=600&q=80" alt="Luxury Details" class="w-full object-cover">
+                </div>
+                <div class="break-inside-avoid mb-6 overflow-hidden rounded-xl shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1522337360788-8b13edd793be?auto=format&fit=crop&w=600&q=80" alt="Salon Spa Lounge" class="w-full object-cover">
+                </div>
+                <div class="break-inside-avoid mb-6 overflow-hidden rounded-xl shadow-sm">
+                    <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?auto=format&fit=crop&w=600&q=80" alt="Luxury Cosmetics" class="w-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-cream border-t border-gray-100">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-12 gap-12">
+            <div class="lg:col-span-5 space-y-6">
+                <h2 class="font-serif text-3xl md:text-4xl text-charcoal font-light" x-text="lang === 'en' ? 'Visit Us' : 'موقعنا'"></h2>
+                <div class="text-sm space-y-2 font-light">
+                    <p><strong>Location:</strong> Al Muhammadiyah, Hafar Al Batin, Saudi Arabia</p>
+                    <p x-text="translations[lang].hours"></p>
+                    <p><strong>Phone:</strong> +966 50 384 6665</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 h-96 rounded-xl overflow-hidden shadow-sm border border-gray-200">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d111551.94821852037!2d45.94721495!3d28.43285745!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fd14fc4a7f0e9c9%3A0x6b9da55555555555!2sHafar%20Al%20Batin%20Saudi%20Arabia!5e0!3m2!1sen!2s!4v1710000000000" 
+                    class="w-full h-full border-0" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-charcoal text-white/60 py-8 text-center text-xs">
+        <p>© 2026 Aseel Palace. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
